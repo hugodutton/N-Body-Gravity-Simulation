@@ -45,22 +45,29 @@ function animate(){
         bodies[i].vx+=ax*0.01;
         bodies[i].vy+=ay*0.01;
     }
-    for(let i=0;i<20;i++){
+    requestAnimationFrame(animate);
+}
+function createBodies(n){
+    bodies.length=0;
+    for(let i=0;i<n;i++){
         bodies.push(
             new Body(
-                Math.random()*1000,
-                Math.random()*700,
+                Math.random()*canvas.width,
+                Math.random()*canvas.height,
                 Math.random()-0.5,
                 Math.random()-0.5,
-                Math.random()*10+1
+                Math.random()*10+5
             )
         );
     }
-    requestAnimationFrame(animate);
 }
+createBodies(2);
 animate();
 const slider=document.getElementById("bodyCount");
 const value=document.getElementById("bodyValue");
-slider.oninput=()=>{
-    value.textContent=slider.value;
-};
+slider.addEventListener("input",()=>{
+    const n=parseInt(slider.value);
+    value.textContent=n;
+    createBodies(n);
+    }
+);
